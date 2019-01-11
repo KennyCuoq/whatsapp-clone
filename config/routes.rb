@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'pages#home'
+
+  authenticated :user do
+    root 'menu#user_dashboard', as: :authenticated_root
+  end
+
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
+
   get 'chats', to: 'menu#user_dashboard'
   resources :chats, only: [:show, :create] do
     resources :messages, only: [:create]
