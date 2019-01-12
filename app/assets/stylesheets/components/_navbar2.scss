@@ -1,0 +1,15 @@
+.navbar {
+  height: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: $light-gray;
+  color: black;
+  border-bottom: 1px solid $transparent-gray;
+  margin: 0;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  .icon {
+    color: $blue;
+  }
+}
