@@ -1,10 +1,7 @@
 .chat-card {
   height: 75px;
   display: flex;
-}
-
-.chat-card-avatar {
-  width: 75px;
+  color: $gray;
 }
 
 .chat-card-info {
@@ -15,14 +12,16 @@
 }
 
 .chat-card-sender {
-  background: red;
   display: flex;
   justify-content: space-between;
+  .sender-name {
+    color: rgb(10,10,10);
+  }
 }
 
 .chat-card-message {
-  background: green;
   flex-grow: 1;
+  font-size: 16px;
 }
 
 .chat-card-arrow {
@@ -30,4 +29,20 @@
   font-size: 25px;
   display: flex;
   align-items: center;
+  a {
+    text-decoration: none;
+    color: $gray;
+  }
 }
+
+// .chat-card-avatar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   text-align: center;
+//   .avatar-small {
+//     display: inline-block;
+//   }
+// }
+
+
