@@ -1,5 +1,5 @@
 .navbar {
-  height: 5vh;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +10,52 @@
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  &:before, &:after{
+    content:none;
+  }
+
   .icon {
     color: $blue;
   }
+}
+
+.navbar-return {
+  font-size: 30px;
+}
+.navbar-call {
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+.navbar-contact-info {
+  flex-grow: 1;
+  display: flex;
+  padding-left: 30px;
+}
+
+.navbar-chat {
+  padding-left: 5px;
+  padding-right: 15px;
+}
+
+.call-options {
+  display: flex;
+  justify-content: space-between;
+  width: 65px;
+}
+
+.sender-details {
+  padding-left: 10px;
+}
+
+.sender-status {
+  font-size: 13px;
+  font-weight: 100;
+  color: $gray;
+  margin-top: -1px;
 }
