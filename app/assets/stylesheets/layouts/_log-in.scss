@@ -1,0 +1,68 @@
+#container-login {
+  background: $background-blue;
+  height: 100vh;
+  color: white;
+
+  #home-login {
+    margin: 2.5vh 0 2.5vh 0;
+    text-align: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  #logo-login {
+    height: 15vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #form-login {
+    padding: 0px 10vw 0px 10vw;
+    font-weight: 100;
+    a {
+      color: $gray;
+    }
+  }
+
+  .form-control {
+      background: none;
+      border: none;
+      border-bottom: 1px solid white;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0 0 0 0;
+      font-size: 14px;
+      color: white;
+    }
+}
+
+#container-login .form-group {
+  margin-bottom: 0px;
+  #user_username {
+    border-top: 1px solid white;
+  }
+  .form-check {
+    display:flex;
+  }
+  .form-check-label {
+    font-weight: 100;
+    font-size: 14px;
+    margin: 0;
+  }
+  #user_remember_me {
+    margin-top: 3px;
+  }
+}
+
+.devise-links {
+  a {
+    font-size: 12px;
+  }
+  #btn-signup {
+    font-weight: bold;
+  }
+}

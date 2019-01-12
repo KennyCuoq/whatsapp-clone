@@ -1,0 +1,9 @@
+.btn-devise {
+  width: 100%;
+  margin-top: 35px;
+  background: $action-blue;
+  font-weight: 100;
+  &:hover {
+    color: white;
+  }
+}
