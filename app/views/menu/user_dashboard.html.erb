@@ -1,1 +1,28 @@
-<h1>CHATS</h1>
+<div class="container" id="container-dashboard">
+  <div class="navbar">
+    <%= link_to root_path do %>
+      <i class="fas fa-cog icon"></i>
+    <% end %>
+    <h4>Chats</h4>
+    <i class="far fa-edit icon"></i>
+  </div>
+  <div class="chat-list">
+    <div class="chat-card">
+      <%= image_tag 'https://storyteq.com/wp-content/uploads/2018/01/Square_avatar_Badr.jpg', class: "chat-card-avatar"%>
+      <div class="chat-card-info">
+        <div class="chat-card-sender">
+          <p class="sender-name"><strong>Sebastian</strong></p>
+          <p class="time">15:08</p>
+        </div>
+        <div class="chat-card-message">
+          <p>Hey Kenny how has it been? </p>
+        </div>
+      </div>
+      <div class="chat-card-arrow">
+        <%= link_to root_path do %>
+          <i class="fas fa-angle-right"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

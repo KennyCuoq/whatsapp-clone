@@ -1,0 +1,45 @@
+.chat-card {
+  height: 75px;
+  display: flex;
+  color: $gray;
+  &:hover {
+    background: $hover-gray;
+  }
+}
+
+.chat-card-info {
+  flex-grow: 1;
+  border-bottom: 1px solid $transparent-gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-card-sender {
+  display: flex;
+  justify-content: space-between;
+  .time {
+    font-size: 16px;
+    padding-top: 2px;
+  }
+  .sender-name {
+    color: rgb(10,10,10);
+  }
+}
+
+.chat-card-message {
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.chat-card-arrow {
+  width: 20px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $transparent-gray;
+  a {
+    text-decoration: none;
+    color: $gray;
+  }
+}
+
