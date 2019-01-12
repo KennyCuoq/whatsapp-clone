@@ -1,0 +1,13 @@
+.chat-card {
+  height: 75px;
+  display: flex;
+}
+
+.chat-card-avatar {
+  width: 75px;
+}
+
+.chat-card-info {
+  flex-grow: 1;
+  border-bottom: 1px solid $transparent-gray;
+}
