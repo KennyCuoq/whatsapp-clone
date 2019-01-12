@@ -2,6 +2,9 @@
   height: 75px;
   display: flex;
   color: $gray;
+  &:hover {
+    background: $hover-gray;
+  }
 }
 
 .chat-card-info {
@@ -14,6 +17,10 @@
 .chat-card-sender {
   display: flex;
   justify-content: space-between;
+  .time {
+    font-size: 16px;
+    padding-top: 2px;
+  }
   .sender-name {
     color: rgb(10,10,10);
   }
@@ -29,6 +36,7 @@
   font-size: 25px;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid $transparent-gray;
   a {
     text-decoration: none;
     color: $gray;
