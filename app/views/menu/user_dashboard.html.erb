@@ -24,5 +24,25 @@
         <% end %>
       </div>
     </div>
+    <% @chats.each do |chat| %>
+      <% other_user = chat.other_user(@user) %>
+      <div class="chat-card">
+        <%= cl_image_tag other_user.photo, crop: :fill, class: "chat-card-avatar" %>
+        <div class="chat-card-info">
+          <div class="chat-card-sender">
+            <p class="sender-name"><strong><%= other_user.username %></strong></p>
+            <p class="time">15:08</p>
+          </div>
+          <div class="chat-card-message">
+            <p>Hey Kenny how has it been? </p>
+          </div>
+        </div>
+        <div class="chat-card-arrow">
+          <%= link_to root_path do %>
+            <i class="fas fa-angle-right"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
