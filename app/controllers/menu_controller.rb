@@ -4,6 +4,11 @@ class MenuController < ApplicationController
 
   def user_dashboard
     @user = current_user
-    # retrieve all chats where user
+    # retrieve all chats where either
+            # - chat belongs to user && there are messages associated to this chat
+            # – chat has messages that were written by user
+
+
+            # add association
   end
 end
