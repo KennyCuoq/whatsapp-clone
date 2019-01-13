@@ -19,7 +19,7 @@ sebastian = User.create!(email: 'kenny@gmail.com', username: "Kenny", password: 
 puts "Users created!"
 # Create chats
 puts "Creating chats..."
-chat = Chat.create!
+chat = Chat.create!(user: kenny)
 puts "Chat created!"
 # Create messages
 puts "Creating messages..."
