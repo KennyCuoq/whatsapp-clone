@@ -4,7 +4,8 @@ class Chat < ApplicationRecord
 
   # This method takes one user argument and return the user they share the chat with
   def other_user(user)
-    self.messages.each {|message| return message.user if message.user != user }
-    # THIS METHOD CAN PROBABLY BE REWRITTEN SO AS TO GENERATE LESS SQL QUERIES
+    messages = self.messages.where("user_id != ?", user)
+    return messages[0].user.username
+    # I FEEL THIS METHOD COULD BE REWRITTEN IN A MORE EFFICIENT AND SUGAR WAY
   end
 end

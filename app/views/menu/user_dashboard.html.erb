@@ -26,6 +26,25 @@
     </div>
     <% @chats.each do |chat| %>
       <p><%= chat.id %></p>
+      <div class="chat-card">
+        <%= chat.other_user(@user) %>
+        <%= cl_image_tag @user.photo, crop: :fill, class: "avatar-small" %>
+        <%= image_tag 'https://storyteq.com/wp-content/uploads/2018/01/Square_avatar_Badr.jpg', class: "chat-card-avatar"%>
+        <div class="chat-card-info">
+          <div class="chat-card-sender">
+            <p class="sender-name"><strong>Sebastian</strong></p>
+            <p class="time">15:08</p>
+          </div>
+          <div class="chat-card-message">
+            <p>Hey Kenny how has it been? </p>
+          </div>
+        </div>
+        <div class="chat-card-arrow">
+          <%= link_to root_path do %>
+            <i class="fas fa-angle-right"></i>
+          <% end %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>
