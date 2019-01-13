@@ -8,4 +8,9 @@ class Chat < ApplicationRecord
     return messages[0].user
     # I FEEL THIS METHOD COULD BE REWRITTEN IN A MORE EFFICIENT AND SUGAR WAY
   end
+
+  def last_message
+    self.messages.last
+    # Returns a chat's last message
+  end
 end
