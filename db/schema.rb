@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_01_14_103124) do
     t.datetime "updated_at", null: false
     t.integer "sender_id"
     t.integer "recipient_id"
-    t.boolean "seen"
+    t.boolean "seen", default: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 
