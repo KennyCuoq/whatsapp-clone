@@ -20,21 +20,33 @@ inou = User.create!(email: 'inou@gmail.com', username: "Inou", password: '123456
 puts "Users created!"
 # Create chats
 puts "Creating chats..."
-chat = Chat.create!(user: kenny)
-chat_2 = Chat.create!(user: sebastian)
+chat = Chat.create!
+chat_2 = Chat.create!
 puts "Chat created!"
 # Create messages
 puts "Creating messages..."
 conversation = ["Hello Kenny, how are you?", "I am great Seb thank you", "Very nice to hear Kenny, I wish you a good day", "And a good day to you too Seb!"]
 conversation.each_with_index do |message, index|
   new_message = Message.new(chat: chat, content: message)
-  index%2 == 0 ? new_message.user = sebastian : new_message.user = kenny
+  if index%2 == 0
+    new_message.sender = sebastian
+    new_message.recipient = kenny
+  else
+    new_message.sender = kenny
+    new_message.recipient = sebastian
+  end
   new_message.save!
 end
-conversation = ["Hello Kenny, how are you?", "I am great Seb thank you", "Very nice to hear Kenny, I wish you a good day", "And a good day to you too Seb!", "See you around friend", "Ciao ciao", 'Take care my good friend Inou']
+conversation = ["Hello Seb, how are you?", "I am great Inou thank you", "Very nice to hear Seb, I wish you a good day", "And a good day to you too Inou!"]
 conversation.each_with_index do |message, index|
   new_message = Message.new(chat: chat_2, content: message)
-  index%2 == 0 ? new_message.user = inou : new_message.user = sebastian
+  if index%2 == 0
+    new_message.sender = inou
+    new_message.recipient = sebastian
+  else
+    new_message.sender = sebastian
+    new_message.recipient = inou
+  end
   new_message.save!
 end
 puts "Messages created!"
