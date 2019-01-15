@@ -17,6 +17,11 @@
       <i class="fas fa-phone navbar-call icon"></i>
     </div>
   </div>
+  <div>
+    <% @chat.messages.each do |message| %>
+      <%= render 'message', message: message %>
+    <% end %>
+  </div>
   <div id="footer-send">
     <%= simple_form_for [ @chat, Message.new ] do |f| %>
       <%= f.input :content, label: false, class: 'message-content'%>

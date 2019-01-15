@@ -1,0 +1,23 @@
+<% was_sent_by_user = message.sender == @user%>
+<div class="bubble_2">
+  <p>
+    <%= message.content %>
+  </p>
+  <p><%= message.time %></p>
+  <div class="bubble-arrow2"></div>
+</div>
+
+
+<h1>test test test</h1>
+
+
+
+<div class="bubble <%= 'alt' if was_sent_by_user %>">
+  <div class="txt">
+    <p class="message"><%= message.content %></p>
+    <span class="timestamp"><%= message.time %></span>
+  </div>
+  <div class="bubble-arrow <%= 'alt' if was_sent_by_user %>"></div>
+</div>
+<h1>test test test</h1>
+

@@ -1,6 +1,8 @@
 class ApplicationPolicy
   attr_reader :user, :record
 
+  # NEED TO WRITE A 'MENU' POLICY
+
   def initialize(user, record)
     @user = user
     @record = record
