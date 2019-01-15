@@ -8,7 +8,11 @@ class Message < ApplicationRecord
     sender == user
   end
 
-  def when
+  def unseen?
+    !seen
+  end
+
+  def date
     time = created_at
     date = time.to_date
     if date == Date.today

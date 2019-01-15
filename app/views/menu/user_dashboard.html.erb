@@ -7,48 +7,8 @@
     <i class="far fa-edit icon"></i>
   </div>
   <div class="chat-list">
-    <div class="chat-card">
-      <%= image_tag 'https://storyteq.com/wp-content/uploads/2018/01/Square_avatar_Badr.jpg', class: "chat-card-avatar"%>
-      <div class="chat-card-info">
-        <div class="chat-card-sender">
-          <p class="sender-name"><strong>Sebastian</strong></p>
-          <p class="time">15:08</p>
-        </div>
-        <div class="chat-card-message">
-          <p>Hey Kenny how has it been? </p>
-        </div>
-      </div>
-      <div class="chat-card-arrow">
-        <%= link_to root_path do %>
-          <i class="fas fa-angle-right"></i>
-        <% end %>
-      </div>
-    </div>
     <% @chats.each do |chat| %>
-      <% other_user = chat.other_user(@user) %>
-      <% message = chat.last_message %>
-      <div class="chat-card">
-        <%= cl_image_tag other_user.photo, crop: :fill, class: "chat-card-avatar" %>
-        <div class="chat-card-info">
-          <div class="chat-card-sender">
-            <p class="sender-name"><strong> <%= other_user.username %> </strong></p>
-            <p class="time"><%= message.when %></p>
-          </div>
-          <div class="chat-card-message">
-            <p>
-              <% if message.sent_by(@user) %>
-                VVV
-              <% end %>
-              <%= message.content %>
-            </p>
-          </div>
-        </div>
-        <div class="chat-card-arrow">
-          <%= link_to root_path do %>
-            <i class="fas fa-angle-right"></i>
-          <% end %>
-        </div>
-      </div>
+      <%= render 'chat_card', chat: chat, user: @user %>
     <% end %>
   </div>
 </div>

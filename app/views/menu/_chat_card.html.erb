@@ -1,0 +1,18 @@
+<% other_user = chat.other_user(user) %>
+<% message = chat.last_message %>
+
+<div class="chat-card">
+  <%= cl_image_tag other_user.photo, crop: :fill, class: "chat-card-avatar" %>
+  <div class="chat-card-info">
+    <% if message.sent_by(user) %>
+      <%= render 'message_sent', message: message, contact: other_user %>
+    <% else %>
+      <%= render 'message_received', message: message, contact: other_user, chat: chat %>
+    <% end %>
+  </div>
+  <div class="chat-card-arrow">
+    <%= link_to root_path do %>
+      <i class="fas fa-angle-right"></i>
+    <% end %>
+  </div>
+</div>

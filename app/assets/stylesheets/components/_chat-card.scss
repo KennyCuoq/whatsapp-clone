@@ -17,6 +17,7 @@
 .chat-card-sender {
   display: flex;
   justify-content: space-between;
+  margin-top: 6px;
   .time {
     font-size: 16px;
     padding-top: 2px;
@@ -29,10 +30,18 @@
 .chat-card-message {
   flex-grow: 1;
   font-size: 16px;
+  display: flex;
+  p {
+    line-height: 19px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-bottom: 8px;
+  }
 }
 
 .chat-card-arrow {
-  width: 20px;
+  width: 30px;
+  padding-left: 5px;
   font-size: 25px;
   display: flex;
   align-items: center;
@@ -43,3 +52,33 @@
   }
 }
 
+.tick {
+  font-size: 12px;
+}
+
+.blue {
+  color: $blue;
+}
+
+.count-unseen {
+  border-radius: 50%;
+  color: white;
+  background: $blue;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  p {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: lighter;
+    padding-top: 1px;
+  }
+}
+
+.message-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
