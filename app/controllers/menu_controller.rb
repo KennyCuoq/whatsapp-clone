@@ -6,7 +6,6 @@ class MenuController < ApplicationController
     # @test = Chat.first.messages
     @user = current_user
     # Picks up chats that has messages where user is either a recipient or a sender
-    binding.pry
     @chats = Chat.including(@user)
     # test
     @chats = @chats.sort_by { |chat| chat.last_message.created_at }.reverse
