@@ -11,6 +11,14 @@
   padding: 3px 5px 3px 5px;
 }
 
+.test {
+  flex-shrink: 1;
+}
+
+.timestamp {
+  flex-shrink: 1;
+}
+
 .bubble-arrow2 {
   position: absolute;
   width: 0;
