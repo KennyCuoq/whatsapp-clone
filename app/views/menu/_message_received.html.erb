@@ -1,5 +1,5 @@
 <div class="chat-card-sender">
-  <p class="sender-name"><strong> <%= user.username %> </strong></p>
+  <p class="sender-name"><strong> <%= contact.username %> </strong></p>
   <p class="time <%= 'blue' if message.unseen? %>"><%= message.date %></p>
 </div>
 <div class="chat-card-message">
@@ -8,7 +8,7 @@
   </div>
   <% if message.unseen? %>
     <div class="count-unseen">
-      <p>3</p>
+      <p><%= chat.count_unseen_by(@user) %></p>
     </div>
   <% end %>
 </div>

@@ -24,6 +24,7 @@ class Chat < ApplicationRecord
   end
 
   def count_unseen_by(user)
+    messages.where(recipient: user).where(seen: false).count
     # takes the chat,s messages by user
     # count the ones that are not seen
     # Chat.includes(:messages)
