@@ -1,6 +1,10 @@
 class Chat < ApplicationRecord
   has_many :messages
 
+  def self.including(user)
+    Chat.includes(:messages).where(messages: {recipient: user }).or(Chat.includes(:messages).where(messages: {sender: user }))
+  end
+
   # This method takes one user argument and return the user they share the chat with
   def other_user(user)
     # messages = self.messages.where("user_id != ?", user)
@@ -19,8 +23,11 @@ class Chat < ApplicationRecord
     last_message.seen
   end
 
-  def unseen_count
+  def count_unseen_by(user)
+    # takes the chat,s messages by user
+    # count the ones that are not seen
+    # Chat.includes(:messages)
+    # current_user
     # Returns the number of unseen messages where recipient is user
-
   end
 end

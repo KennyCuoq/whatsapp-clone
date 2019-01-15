@@ -6,7 +6,7 @@ class MenuController < ApplicationController
     # @test = Chat.first.messages
     @user = current_user
     # Picks up chats that has messages where user is either a recipient or a sender
-    @chats = Chat.includes(:messages).where(messages: {recipient: @user }).or(Chat.includes(:messages).where(messages: {sender: @user }))
+    @chats = Chat.including(@user)
     @chats = @chats.sort_by { |chat| chat.last_message.created_at }.reverse
     # I feel this query can be rewritten in a more efficient way
   end
