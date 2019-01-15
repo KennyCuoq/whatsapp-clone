@@ -3,8 +3,10 @@
   <p class="time"><%= message.date %></p>
 </div>
 <div class="chat-card-message">
-  <p>
-    <i class="fas fa-check-double tick <%= 'blue' if message.seen %>"></i>
-    <%= message.content %>
-  </p>
+  <div class="message-content">
+    <p>
+      <i class="fas fa-check-double tick <%= 'blue' if message.seen %>"></i>
+      <%= message.content %>
+    </p>
+  </div>
 </div>
