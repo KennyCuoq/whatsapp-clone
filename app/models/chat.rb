@@ -1,10 +1,6 @@
 class Chat < ApplicationRecord
   has_many :messages
 
-  def self.including(user)
-    Chat.includes(:messages).where(messages: {recipient: user }).or(Chat.includes(:messages).where(messages: {sender: user }))
-  end
-
   # This method takes one user argument and return the user they share the chat with
   def other_user(user)
     # messages = self.messages.where("user_id != ?", user)

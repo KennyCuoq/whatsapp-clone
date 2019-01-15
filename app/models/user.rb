@@ -7,4 +7,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   mount_uploader :photo, PhotoUploader
+
+  def chats
+    # Picks up chats that has messages where user is either a recipient or a sender
+    chats = Chat.includes(:messages).where(messages: {recipient: self }).or(Chat.includes(:messages).where(messages: {sender: self }))
+    # Sorts chats from most recentl activity to oldest
+    return chats.sort_by { |chat| chat.last_message.created_at }.reverse
+  end
 end
