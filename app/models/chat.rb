@@ -11,7 +11,16 @@ class Chat < ApplicationRecord
   end
 
   def last_message
-    self.messages.last
     # Returns a chat's last message
+    messages.order(:created_at).last
+  end
+
+  def unseen_messages?
+    last_message.seen
+  end
+
+  def unseen_count
+    # Returns the number of unseen messages where recipient is user
+
   end
 end

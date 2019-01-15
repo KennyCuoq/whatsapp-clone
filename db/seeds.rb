@@ -47,6 +47,7 @@ conversation.each_with_index do |message, index|
     new_message.sender = sebastian
     new_message.recipient = inou
   end
+  new_message.seen = true if index == 3
   new_message.save!
 end
 puts "Messages created!"
