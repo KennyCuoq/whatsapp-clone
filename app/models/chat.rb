@@ -1,5 +1,6 @@
 class Chat < ApplicationRecord
   has_many :messages
+  has_many :users, through: :messages
 
   def self.including(user)
     Chat.includes(:messages).where(messages: {recipient: user }).or(Chat.includes(:messages).where(messages: {sender: user }))
