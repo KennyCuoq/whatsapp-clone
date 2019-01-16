@@ -20,4 +20,8 @@ class Chat < ApplicationRecord
   def count_unseen_by(user)
     messages.where(recipient: user).where(seen: false).count
   end
+
+  def sort_chronologically
+    self.messages.order(id: :asc)
+  end
 end

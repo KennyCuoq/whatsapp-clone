@@ -4,20 +4,7 @@
     <%= message.content %>
   </span>
   <span class="timestamp"><%= message.time %></span>
-  <div class="bubble-arrow2 <%= 'alti' if was_sent_by_user %>"></div>
+  <% if message.last_of_series? %>
+    <div class="bubble-arrow2 <%= 'alti' if was_sent_by_user %>"></div>
+  <% end %>
 </div>
-
-
-<h1>test test test</h1>
-
-
-
-<div class="bubble <%= 'alt' if was_sent_by_user %>">
-  <div class="txt">
-    <p class="message"><%= message.content %></p>
-    <span class="timestamp"><%= message.time %></span>
-  </div>
-  <div class="bubble-arrow <%= 'alt' if was_sent_by_user %>"></div>
-</div>
-<h1>test test test</h1>
-

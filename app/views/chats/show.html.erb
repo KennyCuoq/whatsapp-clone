@@ -6,9 +6,10 @@
       <% end %>
     </div>
     <div class="navbar-contact-info">
-      <%= image_tag 'https://storyteq.com/wp-content/uploads/2018/01/Square_avatar_Badr.jpg', class: "avatar-small"%>
+      <%= image_tag @contact.photo.url, class: "avatar-small" %>
+
       <div class="sender-details">
-        <p class="sender-name"><strong>Sebastian</strong></p>
+        <p class="sender-name"><strong><%= @contact.username %></strong></p>
         <p class="sender-status">last connected today at 15:23</p>
       </div>
     </div>
@@ -18,7 +19,7 @@
     </div>
   </div>
   <div class="container-messages">
-    <% @chat.messages.each do |message| %>
+    <% @chat.sort_chronologically.each do |message| %>
       <%= render 'message', message: message %>
     <% end %>
   </div>

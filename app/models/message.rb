@@ -17,6 +17,17 @@ class Message < ApplicationRecord
     created_at.strftime("%H:%M")
   end
 
+  def last_of_series?
+    # Find next message in the conversation
+    next_message = Message.where("chat_id = ? AND id > ?", self.chat, self.id).order(id: :asc).first
+    # Checks whether the message is the last of the user's series or if the message is the very last of the chat
+    next_message.nil? ? true : next_message.from_other_user?(self.sender)
+  end
+
+  def from_other_user?(user)
+    self.sender != user
+  end
+
   def date
     time = created_at
     date = time.to_date
