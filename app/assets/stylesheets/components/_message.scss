@@ -3,12 +3,18 @@
   background: white;
   display: inline-block;
   max-width: 80%;
-  margin-left: 15px;
   border-radius: 7.5px;
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
   position: relative;
   z-index: 1;
   padding: 3px 5px 3px 5px;
+  margin: 0px 0px 0px 15px;
+
+  &.alti {
+    margin: 0px 15px 0px 0px;
+    float: right;
+    background: $message-green;
+  }
 }
 
 .timestamp {
@@ -37,8 +43,18 @@
     transform: rotate(145deg);
     z-index: -1;
   }
-
+  &.alti{
+    right: -2px;
+    bottom: 30px;
+    left: auto;
+  }
 }
+
+.bubble-arrow2.alti:after {
+  transform: rotate(45deg) scaleY(-1);
+  border-top: 9px solid $message-green;
+}
+
 
 
 .bubble{
