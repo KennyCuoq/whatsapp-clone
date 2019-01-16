@@ -1,9 +1,9 @@
 <% was_sent_by_user = message.sender == @user%>
 <div class="bubble_2">
-  <span class="test">
+  <span>
     <%= message.content %>
   </span>
-  <span><%= message.time %></span>
+  <span class="timestamp"><%= message.time %></span>
   <div class="bubble-arrow2"></div>
 </div>
 

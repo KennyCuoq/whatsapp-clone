@@ -5,3 +5,10 @@
   background-image: url(/assets/chat_background.png);
   background-size: cover;
 }
+
+
+.container-messages {
+  overflow: scroll;
+  // Height of screen - navbar - footer
+  height: calc(100% - 130px);
+}

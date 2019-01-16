@@ -11,12 +11,13 @@
   padding: 3px 5px 3px 5px;
 }
 
-.test {
-  flex-shrink: 1;
-}
-
 .timestamp {
-  flex-shrink: 1;
+  padding-left: 15px;
+  font-size: 11px;
+  padding-top: 10px;
+  font-weight: 100;
+  float: right;
+  color: $gray;
 }
 
 .bubble-arrow2 {
