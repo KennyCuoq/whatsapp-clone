@@ -10,7 +10,7 @@ class ChatPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    user.chats.include?(record)
     # Needs to return true if the chat includes messages from current user
   end
 end

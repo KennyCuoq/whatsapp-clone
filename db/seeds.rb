@@ -37,7 +37,7 @@ conversation.each_with_index do |message, index|
   end
   new_message.save!
 end
-conversation = ["Hello Seb, how are you?", "I am great Inou thank you", "Very nice to hear Seb, I wish you a good day", "And a good day to you too Inou!"]
+conversation = [":)", "I am great Inou thank you", "Very nice to hear Seb, I wish you a good day", "And a good day to you too Inou!"]
 conversation.each_with_index do |message, index|
   new_message = Message.new(chat: chat_2, content: message)
   if index%2 == 0
