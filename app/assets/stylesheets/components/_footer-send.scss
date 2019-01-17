@@ -1,27 +1,31 @@
 #footer-send {
-  position:absolute;
   bottom:0;
   width: 100%;
-  height:70px;
+  height: 40px;
   background: $light-gray;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: -webkit-sticky; /* Safari */
   position: sticky;
+  // .submit-message {
+  //   background: green;
+  // }
 }
 
-form, #new-message {
-  width: 100%;
-}
+// form, #new-message {
+//   width: 100%;
+// }
 
 #footer-send input {
   border-radius: 20px;
   box-shadow: none;
-  margin-top: 6px;
   border: 1px solid $transparent-gray;
   color: black;
   height: 29px;
   caret-color: $blue;
+  flex-grow: 1;
+  margin: 0px 10px 0px 12px;
   // flex-grow: 1 !important;
 }
 
@@ -33,7 +37,7 @@ form, #new-message {
   height: 30px;
   position: absolute;
   top: 5px;
-  left: 3px;
+  left: -2px;
 }
 
 .send-icon-background {
@@ -42,4 +46,5 @@ form, #new-message {
   height: 30px;
   border-radius: 50%;
   position: relative;
+  margin-right: 10px;
 }

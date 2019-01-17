@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render "chat_rooms/show" }
+        format.html { render "chat/show" }
         format.js
       end
     end
