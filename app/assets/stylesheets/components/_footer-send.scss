@@ -6,6 +6,8 @@
   background: $light-gray;
   display: flex;
   justify-content: space-between;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
 }
 
 form, #new-message {
