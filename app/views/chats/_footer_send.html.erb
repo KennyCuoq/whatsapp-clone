@@ -5,6 +5,7 @@
       </div>
   <%= simple_form_for [ @chat, Message.new ] do |f| %>
     <%= f.input :content, label: false, class: 'message-content'%>
+    <%= f.input :recipient_id, :as => :hidden, label: false, input_html: {value: @contact.id}%>
     <%= f.button :button do %>
       <div class="send-icon-background" onclick="document.getElementById('hey').blur();">
         <i class="far fa-paper-plane send-icon"></i>
