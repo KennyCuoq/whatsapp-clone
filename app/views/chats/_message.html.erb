@@ -1,10 +1,13 @@
 <% was_sent_by_user = message.sender == @user%>
-<div class="bubble_2 <%= 'alti' if was_sent_by_user %>">
-  <span>
-    <%= message.content %>
-  </span>
-  <span class="timestamp"><%= message.time %></span>
-  <% if message.last_of_series? %>
-    <div class="bubble-arrow2 <%= 'alti' if was_sent_by_user %>"></div>
-  <% end %>
+<div class="message-wrapper <%= 'alti' if was_sent_by_user %>">
+  <div class="bubble_2 <%= 'alti' if was_sent_by_user %> <%= 'extra-top-space' if message.preceded_by_message_from_other_user? %>">
+    <span>
+      <%= message.content %>
+    </span>
+    <span class="timestamp"><%= message.time %></span>
+    <% if message.last_of_series? %>
+      <div class="bubble-arrow2 <%= 'alti' if was_sent_by_user %>"></div>
+    <% end %>
+  </div>
 </div>
+

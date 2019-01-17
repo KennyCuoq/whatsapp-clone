@@ -17,6 +17,14 @@ class Message < ApplicationRecord
     created_at.strftime("%H:%M")
   end
 
+  def preceded_by_message_from_other_user?
+    # Find previous message in conversation
+    previous_message = Message.where("chat_id = ? AND id < ?", self.chat, self.id).order(id: :desc).first
+    # Checks that there is a previous message and
+    # Returns true if sender of previous message is not the sender of self
+    previous_message.nil? ? false : previous_message.sender != self.sender
+  end
+
   def last_of_series?
     # Find next message in the conversation
     next_message = Message.where("chat_id = ? AND id > ?", self.chat, self.id).order(id: :asc).first

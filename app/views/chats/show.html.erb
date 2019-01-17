@@ -1,34 +1,64 @@
-<div class="container container-chat-show">
-  <div class="navbar navbar-chat">
-    <div>
-      <%= link_to root_path do %>
-        <i class="fas fa-angle-left navbar-return icon"></i>
-      <% end %>
-    </div>
-    <div class="navbar-contact-info">
-      <%= image_tag @contact.photo.url, class: "avatar-small" %>
+<div class="navbar navbar-chat">
+  <div>
+    <%= link_to root_path do %>
+      <i class="fas fa-angle-left navbar-return icon"></i>
+    <% end %>
+  </div>
+  <div class="navbar-contact-info">
+    <%= image_tag @contact.photo.url, class: "avatar-small" %>
 
-      <div class="sender-details">
-        <p class="sender-name"><strong><%= @contact.username %></strong></p>
-        <p class="sender-status">last connected today at 15:23</p>
-      </div>
-    </div>
-    <div class="call-options">
-      <i class="fas fa-video icon"></i>
-      <i class="fas fa-phone navbar-call icon"></i>
+    <div class="sender-details">
+      <p class="sender-name"><strong><%= @contact.username %></strong></p>
+      <p class="sender-status">last connected today at 15:23</p>
     </div>
   </div>
-  <div class="container-messages">
-    <% @chat.sort_chronologically.each do |message| %>
-      <%= render 'message', message: message %>
-    <% end %>
-  </div>
-  <div id="footer-send">
-    <%= simple_form_for [ @chat, Message.new ] do |f| %>
-      <%= f.input :content, label: false, class: 'message-content'%>
-    <% end %>
-    <div class="send-icon-background">
-      <i class="far fa-paper-plane send-icon"></i>
-    </div>
+  <div class="call-options">
+    <i class="fas fa-video icon"></i>
+    <i class="fas fa-phone navbar-call icon"></i>
   </div>
 </div>
+<div class="container container-messages">
+  <% @chat.sort_chronologically.each do |message| %>
+    <%= render 'message', message: message %>
+  <% end %>
+</div>
+  <%= render 'footer_send' %>
+
+<script>
+  // const redactionBar = document.getElementById('redaction-bar');
+  // const navbar = document.querySelector('.random');
+
+  // function repositionOnTop() {
+  //   let objDiv = document.querySelector(".othertest");
+  //   objDiv.scrollTop = objDiv.scrollHeight;
+  //   window.scrollTo(0, 0);
+  // }
+
+  // redactionBar.addEventListener('click', repositionOnTop);
+
+  // const test = document.querySelector('.random2');
+
+  // function positionBack(el) {
+  //   el.classList.remove("top");
+  // }
+
+  // test.addEventListener('click', positionBack(navbar));
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

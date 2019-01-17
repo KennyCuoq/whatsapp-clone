@@ -1,3 +1,14 @@
+.message-wrapper {
+  width: 100%;
+  // margin: 10px 0px 0px 15px;
+  &.alti {
+    // margin: 10px 15px 0px 0px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+
 .bubble_2 {
   color:black;
   background: white;
@@ -8,12 +19,18 @@
   position: relative;
   z-index: 1;
   padding: 3px 5px 3px 5px;
-  margin: 0px 0px 0px 15px;
-
+  // float: left;
+  margin: 0.1em 0px 0px 15px;
+  &.extra-top-space {
+    margin: 0.6em 0px 0px 15px;
+  }
   &.alti {
-    margin: 0px 15px 0px 0px;
-    float: right;
+    margin: 0.1em 15px 0px 0px;
+    // float: right;
     background: $message-green;
+    &.extra-top-space {
+    margin: 0.6em 15px 0px 0px;
+  }
   }
 }
 

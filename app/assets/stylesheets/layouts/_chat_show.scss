@@ -1,14 +1,9 @@
-.container-chat-show {
-  height: 100vh;
-  position: relative;
-  padding: 0;
-  background-image: url(/assets/chat_background.png);
-  background-size: cover;
-}
-
-
 .container-messages {
   overflow: scroll;
-  // Height of screen - navbar - footer
-  height: calc(100% - 130px);
+  // Height of screen - navbar(60px) - footer(40px) - border_navbar(1px)
+  height: calc(100vh - 101px);
+  position: relative;
+  padding: 0px 0px 0.3em 0px;
+  background-image: url(/assets/chat_background.png);
+  background-size: cover;
 }

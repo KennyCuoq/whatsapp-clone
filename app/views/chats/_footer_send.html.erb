@@ -1,0 +1,21 @@
+<div id="footer-send">
+  <input type="text" id="redaction-bar">
+  <%= simple_form_for [ @chat, Message.new ] do |f| %>
+    <%= f.input :content, :as => :hidden, label: false, class: 'message-content'%>
+    <%= f.input :recipient_id, :as => :hidden, label: false, input_html: {value: @contact.id}%>
+    <%= f.button :button, class: 'send-icon-background submit-message' do %>
+      <i class="far fa-paper-plane send-icon"></i>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  function setMessageContent() {
+    const messageContent = document.getElementById('redaction-bar').value;
+    const messageInput = document.getElementById('message_content');
+    messageInput.value = messageContent;
+  };
+  document.querySelector(".submit-message").addEventListener("click", setMessageContent);
+
+</script>
+
