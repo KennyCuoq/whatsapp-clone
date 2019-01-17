@@ -1,0 +1,8 @@
+<% if @message.errors.any? %>
+<% else %>
+// Selects message container and appends message into it
+  document.querySelector('.container-messages').insertAdjacentHTML('beforeend', '<%= j render "message", message: @message, was_sent_by_user: true %>');
+// Getting Uncaught SyntaxError: Identifier 'input' has already been declared so i have to work around it by not naming the variable (dirty work around)
+  document.getElementById('redaction-bar').value = '';
+  document.getElementById('redaction-bar').focus();
+<% end %>

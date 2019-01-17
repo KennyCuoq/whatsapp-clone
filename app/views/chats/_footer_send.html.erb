@@ -1,6 +1,6 @@
 <div id="footer-send">
   <input type="text" id="redaction-bar">
-  <%= simple_form_for [ @chat, Message.new ] do |f| %>
+  <%= simple_form_for([ @chat, Message.new ], remote: true) do |f| %>
     <%= f.input :content, :as => :hidden, label: false, class: 'message-content'%>
     <%= f.input :recipient_id, :as => :hidden, label: false, input_html: {value: @contact.id}%>
     <%= f.button :button, class: 'send-icon-background submit-message' do %>
