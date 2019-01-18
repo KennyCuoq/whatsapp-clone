@@ -1,11 +1,12 @@
 <% if @message.errors.any? %>
+  // figure out later
 <% else %>
-// Selects message container and appends message into it
+  // Selects message container and appends message into it
+  // Getting Uncaught SyntaxError: Identifier * has already been declared so i have to work around it by not naming the variable (dirty work around)
   document.querySelector('.container-messages').insertAdjacentHTML('beforeend', '<%= j render "message", message: @message, was_sent_by_user: true %>');
-// Getting Uncaught SyntaxError: Identifier 'input' has already been declared so i have to work around it by not naming the variable (dirty work around)
   // const input = document.getElementById('redaction-bar');
   // input.value = '';
   // input.focus();
-  document.getElementById('redaction-bar').value = '';
-  document.getElementById('redaction-bar').click();
+  // document.getElementById('redaction-bar').value = '';
+  // document.getElementById('redaction-bar').click();
 <% end %>

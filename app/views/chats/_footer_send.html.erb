@@ -10,24 +10,27 @@
 </div>
 
 <script>
-  function setMessageContent() {
-    const messageContent = document.getElementById('redaction-bar').value;
+  function sendMessageInAjax() {
+    const input = document.getElementById('redaction-bar');
+    const messageContent = input.value;
+    input.value = '';
+    input.focus();
     const messageInput = document.getElementById('message_content');
     messageInput.value = messageContent;
   };
 
-  document.querySelector(".submit-message").addEventListener("click", setMessageContent);
+  document.querySelector(".submit-message").addEventListener("click", sendMessageInAjax);
 
 // PROBLEM: AFTER HITTING SEND, THE SOFT KEYBOARD CLOSES
 // ATTEMPTED SOLUTION:
 // 1-create a click event that focuses on input once send buttton is clicked WORKS
 // 2- use prompt()
 // 3- just .click() input after submitting
-  function focusOnInput() {
-    const input = document.getElementById('redaction-bar');
-    input.focus();
-  }
-  document.querySelector(".submit-message").addEventListener("click", focusOnInput);
+  // function focusOnInput() {
+  //   const input = document.getElementById('redaction-bar');
+  //   input.focus();
+  // }
+  // document.querySelector(".submit-message").addEventListener("click", focusOnInput);
 
 
 </script>
