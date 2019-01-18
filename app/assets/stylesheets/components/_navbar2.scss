@@ -1,5 +1,5 @@
 .navbar {
-  z-index: 10;
+  // z-index: 10;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@
   position: sticky;
   // position: fixed;
   // position: -webkit-fixed;
-  top: 0px !important;
+  top: 0;
   padding-left: 15px;
   padding-right: 15px;
   &:before, &:after{

@@ -1,6 +1,7 @@
 .container-messages {
-  overflow-x:hidden;
-  overflow-y: scroll;
+  overflow: scroll;
+  // overflow-x:hidden;
+  // overflow-y: scroll;
   // -webkit-overflow-scrolling: touch;
   // Height of screen - navbar(60px) - footer(40px) - border_navbar(1px)
   height: calc(100vh - 101px);
