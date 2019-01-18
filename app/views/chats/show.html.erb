@@ -1,22 +1,4 @@
-<div class="navbar navbar-chat">
-  <div>
-    <%= link_to root_path do %>
-      <i class="fas fa-angle-left navbar-return icon"></i>
-    <% end %>
-  </div>
-  <div class="navbar-contact-info">
-    <%= image_tag @contact.photo.url, class: "avatar-small" %>
-
-    <div class="sender-details">
-      <p class="sender-name"><strong><%= @contact.username %></strong></p>
-      <p class="sender-status">last connected today at 15:23</p>
-    </div>
-  </div>
-  <div class="call-options">
-    <i class="fas fa-video icon"></i>
-    <i class="fas fa-phone navbar-call icon"></i>
-  </div>
-</div>
+<%= render 'navbar_send' %>
 <div class="container container-messages">
   <% @chat.sort_chronologically.each do |message| %>
     <% was_sent_by_user = (message.sender == @user)%>
@@ -44,7 +26,7 @@
   // }
 
   // test.addEventListener('click', positionBack(navbar));
-
+  // navbar navbar-chat
 
 
 
