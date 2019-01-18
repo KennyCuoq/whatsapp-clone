@@ -7,6 +7,10 @@
     <i class="far fa-edit icon"></i>
   </div>
   <div class="chat-list">
+    <div class="add-contact">
+      <input type="text" placeholder="&emsp;&emsp; Type contact's username eg: 'Kenny'">
+      <i class="fas fa-user-plus blue"></i>
+    </div>
     <% @chats.each do |chat| %>
       <%= link_to chat_path(chat) do  %>
         <%= render 'chat_card', chat: chat, user: @user %>
