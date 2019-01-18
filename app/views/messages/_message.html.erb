@@ -3,7 +3,11 @@
     <span>
       <%= message.content %>
     </span>
-    <span class="timestamp"><%= message.time %></span>
+    <span class="timestamp"><%= message.time %>
+      <% if was_sent_by_user %>
+        <i class="fas fa-check-double check-small <%= 'blue' if message.seen %>"></i>
+      <% end %>
+    </span>
     <% if message.last_of_series? %>
       <div class="bubble-arrow <%= 'sent' if was_sent_by_user %>"></div>
     <% end %>
