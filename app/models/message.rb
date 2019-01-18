@@ -25,6 +25,11 @@ class Message < ApplicationRecord
     previous_message.nil? ? false : previous_message.sender != self.sender
   end
 
+  def previous_message_sent_on_different_day?
+    previous_message = Message.where("chat_id = ? AND id < ?", self.chat, self.id).order(id: :desc).first
+    previous_message.nil? ? true : self.date_stamp != previous_message.date_stamp
+  end
+
   def last_of_series?
     # Find next message in the conversation
     next_message = Message.where("chat_id = ? AND id > ?", self.chat, self.id).order(id: :asc).first
@@ -51,6 +56,24 @@ class Message < ApplicationRecord
     else
       # Returns date in format 31/12/18 if older than a week
       time.strftime("%d/%m/%Y")
+    end
+  end
+
+  # This method is similar to 'date' but it serves to separate chats#show in days, does not return exactly the same thing
+  def date_stamp
+    time = created_at
+    date = time.to_date
+    if date == Date.today
+      'Today'
+    elsif date == Date.today - 1
+      # Returns 'yesterday' if yesterday
+      'Yesterday'
+    elsif date > (Date.today - 7)
+      # Returns day of week eg 'Tuesday' if older than yesterday
+      time.strftime("%A")
+    else
+      # Returns date in format Sun 9 Jan  if older than a week
+      time.strftime('%a %e %b')
     end
   end
 end

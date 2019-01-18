@@ -8,7 +8,9 @@
   </div>
   <div class="chat-list">
     <% @chats.each do |chat| %>
-      <%= render 'chat_card', chat: chat, user: @user %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
     <% end %>
   </div>
 </div>
