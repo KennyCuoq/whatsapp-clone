@@ -4,10 +4,25 @@ class MessagesController < ApplicationController
 
 
   def create
-    @message = Message.new(content: message_params[:content])
-    @chat = Chat.find(params[:chat_id])
+    # binding.pry
+    if message_params[:content]
+      @message = Message.new(content: message_params[:content])
+    else
+      @message = Message.new(content: "Yay! It's the start of your conversation with")
+    end
+    # IF USER ALREAYD HAS A CHAT WITH THAT PERSON, REDIRECT THEM TO THAT CHAT
+    if message_params[:chat_id]
+      @chat = Chat.find(message_params[:chat_id])
+    else
+      @chat = Chat.create
+    end
+    # binding.pry
     @message.chat = @chat
-    @message.recipient = User.find(message_params[:recipient_id])
+    if message_params[:recipient_id]
+      @message.recipient = User.find(message_params[:recipient_id])
+    else
+      @message.recipient = User.find_by_username(message_params[:recipient])
+    end
     @message.sender = current_user
     if @message.save
       respond_to do |format|
@@ -16,7 +31,7 @@ class MessagesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render "chat/show" }
+        format.html { redirect_to root_path }
         format.js
       end
     end
@@ -27,6 +42,12 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content, :recipient_id)
+    params.require(:message).permit(:content, :recipient_id, :recipient, :chat_id)
+  end
+
+  def comes_from_menu
+  end
+
+  def comes_from_chat
   end
 end

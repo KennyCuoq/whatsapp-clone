@@ -4,10 +4,20 @@
       <i class="fas fa-cog icon"></i>
     <% end %>
     <h4>Chats</h4>
-    <i class="far fa-edit icon"></i>
+    <i class="far fa-edit icon new-chat"></i>
   </div>
   <div class="chat-list">
-    <div class="add-contact">
+    <div id="add-contact">
+      <%= simple_form_for(Message.new) do |f| %>
+        <%= f.input :recipient, label: false%>
+        <%= f.button :button do %>
+          <i class="fas fa-user-plus blue"></i>
+        <% end %>
+      <% end %>
+
+
+
+
       <input type="text" placeholder="&emsp;&emsp; Type contact's username eg: 'Kenny'">
       <i class="fas fa-user-plus blue"></i>
     </div>
@@ -16,5 +26,76 @@
         <%= render 'chat_card', chat: chat, user: @user %>
       <% end %>
     <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
+    <% @chats.each do |chat| %>
+      <%= link_to chat_path(chat) do  %>
+        <%= render 'chat_card', chat: chat, user: @user %>
+      <% end %>
+    <% end %>
   </div>
 </div>
+
+<script>
+  function displayAddContactForm() {
+    const contactForm = document.getElementById('add-contact');
+    contactForm.style.display = "flex";
+    console.log(contactForm);
+  }
+
+  document.querySelector('.new-chat').addEventListener('click', displayAddContactForm);
+
+  function hideContactFormWhenScrolled() {
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+      console.log('ehy');
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        const contactForm = document.getElementById("add-contact");
+        contactForm.style.display = "none";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+  }
+
+  hideContactFormWhenScrolled();
+
+</script>

@@ -1,11 +1,11 @@
-<%= render 'navbar_send' %>
+<%= render 'chats/navbar_send' %>
 <div class="container container-messages">
   <% @chat.sort_chronologically.each do |message| %>
     <% was_sent_by_user = (message.sender == @user)%>
     <%= render 'messages/message', message: message, was_sent_by_user: was_sent_by_user %>
   <% end %>
 </div>
-  <%= render 'footer_send' %>
+  <%= render 'chats/footer_send' %>
 
 <script>
   // const redactionBar = document.getElementById('redaction-bar');
