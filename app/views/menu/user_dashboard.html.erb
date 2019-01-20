@@ -9,63 +9,12 @@
   <div class="chat-list">
     <div id="add-contact">
       <%= simple_form_for(Message.new) do |f| %>
-        <%= f.input :recipient, label: false%>
-        <%= f.button :button do %>
+        <%= f.input :recipient, placeholder: "Type contact's username eg: 'Kenny'",  label: false %>
+        <%= f.button :button, class: 'add-icon' do %>
           <i class="fas fa-user-plus blue"></i>
         <% end %>
       <% end %>
-
-
-
-
-      <input type="text" placeholder="&emsp;&emsp; Type contact's username eg: 'Kenny'">
-      <i class="fas fa-user-plus blue"></i>
     </div>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
-    <% @chats.each do |chat| %>
-      <%= link_to chat_path(chat) do  %>
-        <%= render 'chat_card', chat: chat, user: @user %>
-      <% end %>
-    <% end %>
     <% @chats.each do |chat| %>
       <%= link_to chat_path(chat) do  %>
         <%= render 'chat_card', chat: chat, user: @user %>
