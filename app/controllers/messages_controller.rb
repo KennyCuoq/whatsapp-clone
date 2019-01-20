@@ -5,14 +5,27 @@ class MessagesController < ApplicationController
 
   def create
     # binding.pry
+    # If user tries to make new convo with someone who they already have a convo with they should be redriecte to that chat they already ha
     if comes_from_chat_show
       @message = Message.new(content: message_params[:content])
       @chat = Chat.find(message_params[:chat_id])
       @message.recipient = User.find(message_params[:recipient_id])
     else
-      @message = Message.new(content: "Hey there! I am using WhatsUpp.")
-      @chat = Chat.create
-      @message.recipient = User.find_by_username(message_params[:recipient])
+      contact = User.find_by_username(message_params[:recipient])
+      if contact.nil?
+        redirect_to root_path
+        return
+      else
+        chat = contact.find_chat_with(current_user)
+        if !chat.nil?
+          redirect_to chat_path(chat)
+          return
+        else
+          @message = Message.new(content: "Hey there! I am using WhatsUpp.")
+          @chat = Chat.create
+          @message.recipient = contact
+        end
+      end
     end
     @message.chat = @chat
     @message.sender = current_user

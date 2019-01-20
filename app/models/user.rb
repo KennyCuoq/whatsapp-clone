@@ -14,4 +14,9 @@ class User < ApplicationRecord
     # Sorts chats from most recentl activity to oldest
     return chats.sort_by { |chat| chat.last_message.created_at }.reverse
   end
+
+  def find_chat_with(user)
+    # Returns chat current user share with 'user', or nil if there is none
+    Chat.includes(:messages).where(messages: {recipient: self, sender: user }).or(Chat.includes(:messages).where(messages: {recipient: user, sender: self })).first
+  end
 end
