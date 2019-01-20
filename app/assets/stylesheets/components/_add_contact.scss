@@ -1,0 +1,31 @@
+#add-contact {
+  display: none;
+  // display: flex;
+  border-bottom: 1px solid rgba(40, 40, 40, 0.1);
+  align-items: center;
+  #new_message {
+    display: flex;
+    flex-grow: 1;
+  }
+  .form-group {
+    flex-grow: 1;
+    display: flex;
+    margin-bottom: 0 !important;
+  }
+  .add-icon {
+    background: none;
+    border: none;
+    padding: 0px;
+  }
+  // justify-content: space-around;
+  .fa-user-plus {
+    padding: 0px 10px 0px 10px;
+  }
+  input {
+    margin: 10px 0px 10px 10px;
+    &::placeholder {
+      font-size: 16px;
+      // color: $gray;
+    }
+  }
+}

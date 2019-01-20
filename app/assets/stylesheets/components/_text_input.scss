@@ -1,0 +1,20 @@
+input[type=text] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input, input.form-control {
+  border-radius: 20px;
+  box-shadow: none !important;
+  border: 1px solid $transparent-gray !important;
+  color: black;
+  height: 32px;
+  caret-color: $blue;
+  flex-grow: 1;
+  margin: 0px 10px 0px 10px;
+  &:focus{
+    outline: none;
+  }
+  // flex-grow: 1 !important;
+}
