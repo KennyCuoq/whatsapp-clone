@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
   def create
     # binding.pry
     # If user tries to make new convo with someone who they already have a convo with they should be redriecte to that chat they already ha
+    # binding.pry
     if comes_from_chat_show
       # This is if the message is being created directly from an existing chat
       @message = Message.new(content: message_params[:content])

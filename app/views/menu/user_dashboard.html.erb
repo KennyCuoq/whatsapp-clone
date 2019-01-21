@@ -23,28 +23,23 @@
   </div>
 </div>
 
-<script>
-  function displayAddContactForm() {
-    const contactForm = document.getElementById('add-contact');
-    contactForm.style.display = "flex";
-    console.log(contactForm);
-  }
 
-  document.querySelector('.new-chat').addEventListener('click', displayAddContactForm);
-
-  function hideContactFormWhenScrolled() {
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-      console.log('ehy');
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
-        const contactForm = document.getElementById("add-contact");
-        contactForm.style.display = "none";
-      }
-      prevScrollpos = currentScrollPos;
+<% content_for :after_js do %>
+  <%= javascript_pack_tag 'contact-form' %>
+  <script>
+    function updateChatCard(data) {
+      const chatCard = document.getElementById(`chat-card-${data.chat_id}`);
+      const contactForm = document.getElementById('add-contact');
+      chatCard.remove();
+      contactForm.insertAdjacentHTML('afterend', `${data.chat_partial}`);
     }
-  }
 
-  hideContactFormWhenScrolled();
+    App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
+      received: (data) => {
+        updateChatCard(data);
+      }
+    })
 
-</script>
+  </script>
+
+<% end %>
