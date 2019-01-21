@@ -30,7 +30,9 @@
     function updateChatCard(data) {
       const chatCard = document.getElementById(`chat-card-${data.chat_id}`);
       const contactForm = document.getElementById('add-contact');
-      chatCard.remove();
+      if (chatCard) {
+        chatCard.remove();
+      }
       contactForm.insertAdjacentHTML('afterend', `${data.chat_partial}`);
     }
 
