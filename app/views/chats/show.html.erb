@@ -7,31 +7,29 @@
 </div>
   <%= render 'chats/footer_send' %>
 
-<script>
-  // const redactionBar = document.getElementById('redaction-bar');
-  // const navbar = document.querySelector('.random');
-
-  // function repositionOnTop() {
-  //   let objDiv = document.querySelector(".othertest");
-  //   objDiv.scrollTop = objDiv.scrollHeight;
-  //   window.scrollTo(0, 0);
-  // }
-
-  // redactionBar.addEventListener('click', repositionOnTop);
-
-  // const test = document.querySelector('.random2');
-
-  // function positionBack(el) {
-  //   el.classList.remove("top");
-  // }
-
-  // test.addEventListener('click', positionBack(navbar));
-  // navbar navbar-chat
-
-
-
-
-</script>
+<% content_for :after_js do %>
+  <script>
+    function removePreviousBubbleArrow() {
+      const allMessages = document.querySelectorAll('.bubble')
+      const lastMessage = allMessages[allMessages.length-1]
+      if (!lastMessage.classList.contains('sent')) {
+        const bubbleArrow = lastMessage.lastElementChild;
+        bubbleArrow.remove();
+      }
+    }
+    scrollLastMessageIntoView();
+    App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
+      received: (data) => {
+        if (data.current_user_id !== <%= @user.id %>) {
+          const messagesContainer = document.querySelector('.container-messages');
+          removePreviousBubbleArrow();
+          messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
+          scrollLastMessageIntoView();
+        }
+      }
+    })
+  </script>
+<% end %>
 
 
 

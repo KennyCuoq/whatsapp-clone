@@ -1,13 +1,37 @@
 <% other_user = chat.other_user(user) %>
 <% message = chat.last_message %>
 
-<div class="chat-card">
+<div class="chat-card" id="chat-card-<%= chat.id %>">
   <%= cl_image_tag other_user.photo, crop: :fill, class: "chat-card-avatar" %>
   <div class="chat-card-info">
-    <% if message.sent_by(user) %>
-      <%= render 'message_sent', message: message, contact: other_user %>
+    <% if message.sent_by?(user) %>
+      <div class="chat-card-sender">
+        <p class="sender-name"><strong> <%= other_user.username %> </strong></p>
+        <p class="time"><%= message.date %></p>
+      </div>
+      <div class="chat-card-message">
+        <div class="message-content">
+          <p>
+            <i class="fas fa-check-double tick <%= 'blue' if message.seen %>"></i>
+            <%= message.content %>
+          </p>
+        </div>
+      </div>
     <% else %>
-      <%= render 'message_received', message: message, contact: other_user, chat: chat %>
+      <div class="chat-card-sender">
+        <p class="sender-name"><strong> <%= other_user.username %> </strong></p>
+        <p class="time <%= 'blue' if message.unseen? %>"><%= message.date %></p>
+      </div>
+      <div class="chat-card-message">
+        <div class="message-content">
+          <p><%= message.content %></p>
+        </div>
+        <% if message.unseen? %>
+          <div class="count-unseen">
+            <p><%= chat.count_unseen_by(user) %></p>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div class="chat-card-arrow">
