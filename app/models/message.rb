@@ -4,9 +4,20 @@ class Message < ApplicationRecord
   belongs_to :chat
   validates :chat_id, :sender_id, :recipient_id, presence: true
   validates :content, presence: true, allow_blank: false
+  after_create :broadcast_message
 
-  def sent_by(user)
+  def sent_by?(user)
     sender == user
+  end
+
+  def broadcast_message
+    ActionCable.server.broadcast("chat_#{chat.id}", {
+      message_partial: ApplicationController.renderer.render(
+        partial: 'messages/message',
+        locals: { message: self, was_sent_by_user: false }
+      ),
+      current_user_id: sender.id
+    })
   end
 
   def unseen?

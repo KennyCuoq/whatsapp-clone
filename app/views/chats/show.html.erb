@@ -7,31 +7,9 @@
 </div>
   <%= render 'chats/footer_send' %>
 
-<script>
-  // const redactionBar = document.getElementById('redaction-bar');
-  // const navbar = document.querySelector('.random');
-
-  // function repositionOnTop() {
-  //   let objDiv = document.querySelector(".othertest");
-  //   objDiv.scrollTop = objDiv.scrollHeight;
-  //   window.scrollTo(0, 0);
-  // }
-
-  // redactionBar.addEventListener('click', repositionOnTop);
-
-  // const test = document.querySelector('.random2');
-
-  // function positionBack(el) {
-  //   el.classList.remove("top");
-  // }
-
-  // test.addEventListener('click', positionBack(navbar));
-  // navbar navbar-chat
-
-
-
-
-</script>
+<% content_for :after_js do %>
+  <%= javascript_pack_tag 'append_received_message' %>
+<% end %>
 
 
 

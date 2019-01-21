@@ -4,7 +4,7 @@
 <div class="chat-card">
   <%= cl_image_tag other_user.photo, crop: :fill, class: "chat-card-avatar" %>
   <div class="chat-card-info">
-    <% if message.sent_by(user) %>
+    <% if message.sent_by?(user) %>
       <%= render 'message_sent', message: message, contact: other_user %>
     <% else %>
       <%= render 'message_received', message: message, contact: other_user, chat: chat %>
