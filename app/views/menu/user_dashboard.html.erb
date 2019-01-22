@@ -52,7 +52,7 @@
 
     App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
-        if (data.type === "new message") {
+        if (data.type === "new message (chat-card)") {
           updateChatCard(data);
         } else {
           displayTypingEvent(data);

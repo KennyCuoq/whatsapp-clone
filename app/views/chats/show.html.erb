@@ -33,29 +33,35 @@
       }
     }
 
+    function appendReceivedMessage(data) {
+      const messagesContainer = document.querySelector('.container-messages');
+      removePreviousBubbleArrow();
+      const senderStatus = document.querySelector('.sender-status');
+      senderStatus.innerHTML = 'Back to normal';
+      messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
+      scrollLastMessageIntoView();
+    }
+
     scrollLastMessageIntoView();
 
-    App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
-      received: (data) => {
-        if (data.current_user_id !== <%= @user.id %>) {
-          const messagesContainer = document.querySelector('.container-messages');
-          removePreviousBubbleArrow();
-          const senderStatus = document.querySelector('.sender-status');
-          senderStatus.innerHTML = 'Back to normal';
-          messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
-          scrollLastMessageIntoView();
-        }
-      }
-    })
+    // App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
+    //   received: (data) => {
+    //     if (data.current_user_id !== <%= @user.id %>) {
+    //       const messagesContainer = document.querySelector('.container-messages');
+    //       removePreviousBubbleArrow();
+    //       const senderStatus = document.querySelector('.sender-status');
+    //       senderStatus.innerHTML = 'Back to normal';
+    //       messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
+    //       scrollLastMessageIntoView();
+    //     }
+    //   }
+    // })
     //////////
 
 
     //////////
     // Subscribe to the contact's personal channel to be able to send data through it, to notify of type event for ex
     App['user_<%= @contact.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @contact.id %> }, {
-      received: (data) => {
-        // console.log(data);
-      },
       sendTypingNotification: function() {
         this.perform('typing', { type: 'typing', sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
       }
@@ -74,7 +80,6 @@
 
     // Shows the 'typing...' notification
     function displayTypingEvent(data) {
-      console.log(data);
       const senderStatus = document.querySelector('.sender-status');
       senderStatus.innerHTML = 'typing...';
       window.clearTimeout(window.timeoutHandle);
@@ -87,6 +92,8 @@
       received: (data) => {
         if ((data.type === 'typing') && (data.chat_id === <%= @chat.id %>)) {
           displayTypingEvent(data);
+        } else if ((data.type === 'new message') && (data.chat_id === <%= @chat.id %>)) {
+          appendReceivedMessage(data);
         }
       }
     })
