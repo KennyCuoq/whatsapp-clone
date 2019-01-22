@@ -40,6 +40,8 @@
         if (data.current_user_id !== <%= @user.id %>) {
           const messagesContainer = document.querySelector('.container-messages');
           removePreviousBubbleArrow();
+          const senderStatus = document.querySelector('.sender-status');
+          senderStatus.innerHTML = 'Back to normal';
           messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
           scrollLastMessageIntoView();
         }
@@ -77,7 +79,7 @@
       senderStatus.innerHTML = 'typing...';
       window.clearTimeout(window.timeoutHandle);
       window.timeoutHandle = window.setTimeout(function(){
-        senderStatus.innerHTML = 'Back to normal'
+        senderStatus.innerHTML = 'Back to normal';
       },1500);
     }
 
