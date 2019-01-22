@@ -13,6 +13,10 @@ class Message < ApplicationRecord
   def broadcast_message
     # To recipient's 'Chat show'
     ActionCable.server.broadcast("user_#{recipient.id}", {
+      unseen_chat_count_partial: ApplicationController.renderer.render(
+        partial: 'chats/unseen_chat_count',
+        locals: { user: self.recipient }
+      ),
       message_partial: ApplicationController.renderer.render(
         partial: 'messages/message',
         locals: { message: self, was_sent_by_user: false }

@@ -88,12 +88,21 @@
       },1500);
     }
 
+    function updateUnseenChatCount(data) {
+      const unseenChatCount = document.querySelector('.btn-return-to-dashboard span');
+      unseenChatCount.innerHTML = data.unseen_chat_count_partial;
+    }
+
     App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
         if ((data.type === 'typing') && (data.chat_id === <%= @chat.id %>)) {
           displayTypingEvent(data);
-        } else if ((data.type === 'new message') && (data.chat_id === <%= @chat.id %>)) {
-          appendReceivedMessage(data);
+        } else if (data.type === 'new message') {
+          if (data.chat_id === <%= @chat.id %>) {
+            appendReceivedMessage(data);
+          } else {
+            updateUnseenChatCount(data);
+          }
         }
       }
     })

@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   def chats
     # Picks up chats that has messages where user is either a recipient or a sender
-    chats = Chat.includes(:messages).where(messages: {recipient: self }).or(Chat.includes(:messages).where(messages: {sender: self }))
+    chats = all_chats_including_self
     # Sorts chats from most recentl activity to oldest
     return chats.sort_by { |chat| chat.last_message.created_at }.reverse
   end
@@ -18,5 +18,18 @@ class User < ApplicationRecord
   def find_chat_with(user)
     # Returns chat current user share with 'user', or nil if there is none
     Chat.includes(:messages).where(messages: {recipient: self, sender: user }).or(Chat.includes(:messages).where(messages: {recipient: user, sender: self })).first
+  end
+
+  def unseen_chats_count
+    # Returns the number of chats in which user has unseen messages
+    # This could be rewritten in a more efficient query
+    all_chats_including_self.select { |chat| chat.count_unseen_by(self) > 0 }.count
+
+  end
+
+  private
+
+  def all_chats_including_self
+    Chat.includes(:messages).where(messages: {recipient: self }).or(Chat.includes(:messages).where(messages: {sender: self }))
   end
 end
