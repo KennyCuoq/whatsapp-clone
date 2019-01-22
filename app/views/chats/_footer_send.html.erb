@@ -10,16 +10,4 @@
   <% end %>
 </div>
 
-<script>
-  function sendMessageInAjax() {
-    const input = document.getElementById('redaction-bar');
-    const messageContent = input.value;
-    input.value = '';
-    input.focus();
-    const messageInput = document.getElementById('message_content');
-    messageInput.value = messageContent;
-  };
-
-  document.querySelector(".submit-message").addEventListener("click", sendMessageInAjax);
-</script>
 

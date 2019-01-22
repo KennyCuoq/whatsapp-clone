@@ -9,6 +9,19 @@
 
 <% content_for :after_js do %>
   <script>
+    function sendMessageInAjax() {
+      const input = document.getElementById('redaction-bar');
+      const messageContent = input.value;
+      input.value = '';
+      input.focus();
+      const messageInput = document.getElementById('message_content');
+      messageInput.value = messageContent;
+    };
+
+    document.querySelector(".submit-message").addEventListener("click", sendMessageInAjax);
+
+
+
     //////////
     // Subscribe to chat channel and deal with when user receive a message from contact
     function removePreviousBubbleArrow() {
@@ -42,7 +55,7 @@
         // console.log(data);
       },
       sendTypingNotification: function() {
-        this.perform('typing', { sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+        this.perform('typing', { type: 'typing', sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
       }
     })
 
@@ -59,6 +72,7 @@
 
     // Shows the 'typing...' notification
     function displayTypingEvent(data) {
+      console.log(data);
       const senderStatus = document.querySelector('.sender-status');
       senderStatus.innerHTML = 'typing...';
       window.clearTimeout(window.timeoutHandle);
@@ -69,7 +83,7 @@
 
     App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
-        if (data.chat_id === <%= @chat.id %>) {
+        if ((data.type === 'typing') && (data.chat_id === <%= @chat.id %>)) {
           displayTypingEvent(data);
         }
       }

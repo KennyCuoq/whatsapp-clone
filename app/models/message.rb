@@ -27,7 +27,8 @@ class Message < ApplicationRecord
         partial: 'menu/chat_card',
         locals: { chat: self.chat, user: self.recipient }
       ),
-      chat_id: chat.id
+      chat_id: chat.id,
+      type: 'new message'
     })
     # To sender's dashboard
     ActionCable.server.broadcast("user_#{sender.id}", {
@@ -35,7 +36,8 @@ class Message < ApplicationRecord
         partial: 'menu/chat_card',
         locals: { chat: self.chat, user: self.sender }
       ),
-      chat_id: chat.id
+      chat_id: chat.id,
+      type: 'new message'
     })
   end
 

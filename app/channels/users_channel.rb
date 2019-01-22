@@ -10,6 +10,7 @@ class UsersChannel < ApplicationCable::Channel
   def typing(data)
     recipient_id = data['recipient_id']
     ActionCable.server.broadcast "user_#{recipient_id}", {
+      type: data['type'],
       sender_id: data['sender_id'],
       recipient_id: recipient_id,
       chat_id: data['chat_id']
