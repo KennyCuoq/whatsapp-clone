@@ -6,4 +6,13 @@ class UsersChannel < ApplicationCable::Channel
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
+
+  def typing(data)
+    recipient_id = data['recipient_id']
+    ActionCable.server.broadcast "user_#{recipient_id}", {
+      sender_id: data['sender_id'],
+      recipient_id: recipient_id,
+      chat_id: data['chat_id']
+    }
+  end
 end

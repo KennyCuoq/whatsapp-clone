@@ -9,6 +9,8 @@
 
 <% content_for :after_js do %>
   <script>
+    //////////
+    // Subscribe to chat channel and deal with when user receive a message from contact
     function removePreviousBubbleArrow() {
       const allMessages = document.querySelectorAll('.bubble')
       const lastMessage = allMessages[allMessages.length-1]
@@ -17,7 +19,9 @@
         bubbleArrow.remove();
       }
     }
+
     scrollLastMessageIntoView();
+
     App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
       received: (data) => {
         if (data.current_user_id !== <%= @user.id %>) {
@@ -25,6 +29,48 @@
           removePreviousBubbleArrow();
           messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
           scrollLastMessageIntoView();
+        }
+      }
+    })
+    //////////
+
+
+    //////////
+    // Subscribe to the contact's personal channel to be able to send data through it, to notify of type event for ex
+    App['user_<%= @contact.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @contact.id %> }, {
+      received: (data) => {
+        // console.log(data);
+      },
+      sendTypingNotification: function() {
+        this.perform('typing', { sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      }
+    })
+
+    function broadcastEvent() {
+      App['user_<%= @contact.id %>'].sendTypingNotification();
+    }
+
+    const input = document.getElementById('redaction-bar')
+    input.addEventListener('beforeinput', broadcastEvent)
+    //////////
+
+    // Subscribe to current user's own channel to receive data sent over by over users and deal with it
+    // Here is where I transform the notification into a graphic 'Typing...' result
+
+    // Shows the 'typing...' notification
+    function displayTypingEvent(data) {
+      const senderStatus = document.querySelector('.sender-status');
+      senderStatus.innerHTML = 'typing...';
+      window.clearTimeout(window.timeoutHandle);
+      window.timeoutHandle = window.setTimeout(function(){
+        senderStatus.innerHTML = 'Back to normal'
+      },1500);
+    }
+
+    App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
+      received: (data) => {
+        if (data.chat_id === <%= @chat.id %>) {
+          displayTypingEvent(data);
         }
       }
     })

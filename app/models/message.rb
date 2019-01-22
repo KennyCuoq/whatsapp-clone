@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   belongs_to :chat
   validates :chat_id, :sender_id, :recipient_id, presence: true
   validates :content, presence: true, allow_blank: false
-  after_create :broadcast_message_to_chat, :broadcast_message_to_recipient
+  after_create :broadcast_message_to_chat, :broadcast_message_to_dashboard
 
   def sent_by?(user)
     sender == user
@@ -20,8 +20,8 @@ class Message < ApplicationRecord
     })
   end
 
-  def broadcast_message_to_recipient
-    # binding.pry
+  def broadcast_message_to_dashboard
+    # To recipient's dashboard
     ActionCable.server.broadcast("user_#{recipient.id}", {
       chat_partial: ApplicationController.renderer.render(
         partial: 'menu/chat_card',
@@ -29,13 +29,14 @@ class Message < ApplicationRecord
       ),
       chat_id: chat.id
     })
-    # ActionCable.server.broadcast("user_#{recipient.id}", {
-    #   message_partial: ApplicationController.renderer.render(
-    #     partial: 'menu/chat_card',
-    #     locals: { message: chat, user: recipient }
-    #   ),
-    #   current_user_id: sender.id
-    # })
+    # To sender's dashboard
+    ActionCable.server.broadcast("user_#{sender.id}", {
+      chat_partial: ApplicationController.renderer.render(
+        partial: 'menu/chat_card',
+        locals: { chat: self.chat, user: self.sender }
+      ),
+      chat_id: chat.id
+    })
   end
 
   def unseen?
