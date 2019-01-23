@@ -64,15 +64,21 @@
     App['user_<%= @contact.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @contact.id %> }, {
       sendTypingNotification: function() {
         this.perform('typing', { type: 'typing', sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      },
+      sendSeenNotification: function() {
+        this.perform('messages_seen', { type: 'messages seen', user_id: <%= @user.id %>, contact_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      },
+      makeMessagesSeenInDatabase: function() {
+        this.perform('messages_seen', { type: 'messages seen PATCH', user_id: <%= @user.id %>, contact_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
       }
     })
 
-    function broadcastEvent() {
+    function broadcastTypingEvent() {
       App['user_<%= @contact.id %>'].sendTypingNotification();
     }
 
     const input = document.getElementById('redaction-bar')
-    input.addEventListener('beforeinput', broadcastEvent)
+    input.addEventListener('beforeinput', broadcastTypingEvent)
     //////////
 
     // Subscribe to current user's own channel to receive data sent over by over users and deal with it
@@ -93,6 +99,14 @@
       unseenChatCount.innerHTML = data.unseen_chat_count_partial;
     }
 
+    function makeMessagesSeen(data) {
+      console.log(data);
+      const unseenChecks = document.querySelectorAll(".fa-check-double:not(.blue)")
+      unseenChecks.forEach((check) => {
+        check.classList.add('blue');
+      })
+    }
+
     App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
         if ((data.type === 'typing') && (data.chat_id === <%= @chat.id %>)) {
@@ -103,16 +117,82 @@
           } else {
             updateUnseenChatCount(data);
           }
+        } else if (data.type === 'messages seen') {
+          if (data.chat_id === <%= @chat.id %>) {
+            makeMessagesSeen(data);
+          }
         }
       }
     })
+
+    function broadcastSeenEvent() {
+      App['user_<%= @contact.id %>'].sendSeenNotification();
+    }
+
+    function makeMessagesSeenInDatabase () {
+      App['user_<%= @contact.id %>'].makeMessagesSeenInDatabase();
+    }
+
+
+    let scheduled = null;
+    window.addEventListener("touchstart", event => {
+      broadcastSeenEvent();
+      if (!scheduled) {
+        setTimeout(() => {
+          makeMessagesSeenInDatabase();
+          scheduled = null;
+        }, 2000);
+      }
+      scheduled = event;
+    });
+
+    input.addEventListener('mouseover', event => {
+      if (!scheduled) {
+        setTimeout(() => {
+          broadcastSeenEvent();
+          makeMessagesSeenInDatabase();
+          scheduled = null;
+        }, 2000);
+      }
+      scheduled = event;
+    });
+
+    input.addEventListener('beforeinput', event => {
+      broadcastSeenEvent();
+      if (!scheduled) {
+        setTimeout(() => {
+          makeMessagesSeenInDatabase();
+          broadcastSeenEvent();
+          scheduled = null;
+        }, 2000);
+      }
+      scheduled = event;
+    });
+
+
+    // window.addEventListener('mouseover', broadcastSeenEvent);
+    //     let timeout
+    // window.addEventListener('mouseover', () => {
+    //   clearTimeout(timeout);
+    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
+    // });
+    // window.addEventListener('touchstart', () => {
+    //   clearTimeout(timeout);
+    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
+    // });
+
   </script>
 <% end %>
 
 
 
 
+<!-- what is should do -->
+<!-- upon mouseover or touch by message recipient -->
+<!-- should make all their unread messages read -->
+<!-- and make the tick blue for the sender -->
 
+<!-- when recipient opens the page, sender should see ticks go blue as well -->
 
 
 
