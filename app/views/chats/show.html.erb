@@ -100,7 +100,6 @@
     }
 
     function makeMessagesSeen(data) {
-      console.log(data);
       const unseenChecks = document.querySelectorAll(".fa-check-double:not(.blue)")
       unseenChecks.forEach((check) => {
         check.classList.add('blue');
@@ -133,7 +132,8 @@
       App['user_<%= @contact.id %>'].makeMessagesSeenInDatabase();
     }
 
-
+    // Set a few event listeners that 'track' when recipient is active on chat to turn messages to 'seen'
+    // Making sure not to hit the actual database constantly in the background with a timer. Only allowed to hit the database every 2 seconds while seen receipts (double checks) can become blue every time the event is triggered
     let scheduled = null;
     window.addEventListener("touchstart", event => {
       broadcastSeenEvent();
@@ -141,18 +141,18 @@
         setTimeout(() => {
           makeMessagesSeenInDatabase();
           scheduled = null;
-        }, 2000);
+        }, 1500);
       }
       scheduled = event;
     });
 
-    input.addEventListener('mouseover', event => {
+    window.addEventListener('mouseover', event => {
       if (!scheduled) {
         setTimeout(() => {
           broadcastSeenEvent();
           makeMessagesSeenInDatabase();
           scheduled = null;
-        }, 2000);
+        }, 1500);
       }
       scheduled = event;
     });
@@ -164,7 +164,7 @@
           makeMessagesSeenInDatabase();
           broadcastSeenEvent();
           scheduled = null;
-        }, 2000);
+        }, 1500);
       }
       scheduled = event;
     });
