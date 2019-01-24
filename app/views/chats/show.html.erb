@@ -9,6 +9,7 @@
 
 <% content_for :after_js do %>
   <script>
+
     function sendMessageInAjax() {
       const input = document.getElementById('redaction-bar');
       const messageContent = input.value;
@@ -41,23 +42,8 @@
       messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
       scrollLastMessageIntoView();
     }
-
-    scrollLastMessageIntoView();
-
-    // App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
-    //   received: (data) => {
-    //     if (data.current_user_id !== <%= @user.id %>) {
-    //       const messagesContainer = document.querySelector('.container-messages');
-    //       removePreviousBubbleArrow();
-    //       const senderStatus = document.querySelector('.sender-status');
-    //       senderStatus.innerHTML = 'Back to normal';
-    //       messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
-    //       scrollLastMessageIntoView();
-    //     }
-    //   }
-    // })
     //////////
-
+    scrollLastMessageIntoView();
 
     //////////
     // Subscribe to the contact's personal channel to be able to send data through it, to notify of type event for ex
@@ -134,6 +120,11 @@
 
     // Set a few event listeners that 'track' when recipient is active on chat to turn messages to 'seen'
     // Making sure not to hit the actual database constantly in the background with a timer. Only allowed to hit the database every 2 seconds while seen receipts (double checks) can become blue every time the event is triggered
+    window.addEventListener('load', event => {
+      broadcastSeenEvent();
+      makeMessagesSeenInDatabase();
+    })
+
     let scheduled = null;
     window.addEventListener("touchstart", event => {
       broadcastSeenEvent();
@@ -168,36 +159,5 @@
       }
       scheduled = event;
     });
-
-
-    // window.addEventListener('mouseover', broadcastSeenEvent);
-    //     let timeout
-    // window.addEventListener('mouseover', () => {
-    //   clearTimeout(timeout);
-    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
-    // });
-    // window.addEventListener('touchstart', () => {
-    //   clearTimeout(timeout);
-    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
-    // });
-
   </script>
 <% end %>
-
-
-
-
-<!-- what is should do -->
-<!-- upon mouseover or touch by message recipient -->
-<!-- should make all their unread messages read -->
-<!-- and make the tick blue for the sender -->
-
-<!-- when recipient opens the page, sender should see ticks go blue as well -->
-
-
-
-
-
-
-
-
