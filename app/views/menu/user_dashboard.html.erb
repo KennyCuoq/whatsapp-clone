@@ -29,6 +29,7 @@
   <script>
     // Displays updated chat-chard when new message is sent
     function updateChatCard(data) {
+      makeSeenCheckBlue(data);
       const chatCard = document.getElementById(`chat-card-${data.chat_id}`);
       const contactForm = document.getElementById('add-contact');
       if (chatCard) {
