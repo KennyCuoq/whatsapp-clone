@@ -46,7 +46,7 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-   config.action_cable.url = 'wss://www.whatsapp-kennycuoq.herokuapp.com/'
+   config.action_cable.url = 'wss://www.whatsapp-kennycuoq.herokuapp.com/cable'
    # 'wss://www.keetchen.co/cable'
    config.action_cable.allowed_request_origins = [ 'https://whatsapp-kennycuoq.herokuapp.com/', 'http://whatsapp-kennycuoq.herokuapp.com/', 'https://www.whatsapp-kennycuoq.herokuapp.com/', 'https://www.whatsapp-kennycuoq.herokuapp.com/']
 
