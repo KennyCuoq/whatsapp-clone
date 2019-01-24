@@ -9,6 +9,21 @@
 
 <% content_for :after_js do %>
   <script>
+    function sendMessageInAjax() {
+      const input = document.getElementById('redaction-bar');
+      const messageContent = input.value;
+      input.value = '';
+      input.focus();
+      const messageInput = document.getElementById('message_content');
+      messageInput.value = messageContent;
+    };
+
+    document.querySelector(".submit-message").addEventListener("click", sendMessageInAjax);
+
+
+
+    //////////
+    // Subscribe to chat channel and deal with when user receive a message from contact
     function removePreviousBubbleArrow() {
       const allMessages = document.querySelectorAll('.bubble')
       const lastMessage = allMessages[allMessages.length-1]
@@ -17,24 +32,167 @@
         bubbleArrow.remove();
       }
     }
+
+    function appendReceivedMessage(data) {
+      const messagesContainer = document.querySelector('.container-messages');
+      removePreviousBubbleArrow();
+      const senderStatus = document.querySelector('.sender-status');
+      senderStatus.innerHTML = 'Back to normal';
+      messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
+      scrollLastMessageIntoView();
+    }
+
     scrollLastMessageIntoView();
-    App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
+
+    // App['chat_<%= @chat.id %>'] = App.cable.subscriptions.create({ channel: 'ChatsChannel', chat_id: <%= @chat.id %> }, {
+    //   received: (data) => {
+    //     if (data.current_user_id !== <%= @user.id %>) {
+    //       const messagesContainer = document.querySelector('.container-messages');
+    //       removePreviousBubbleArrow();
+    //       const senderStatus = document.querySelector('.sender-status');
+    //       senderStatus.innerHTML = 'Back to normal';
+    //       messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
+    //       scrollLastMessageIntoView();
+    //     }
+    //   }
+    // })
+    //////////
+
+
+    //////////
+    // Subscribe to the contact's personal channel to be able to send data through it, to notify of type event for ex
+    App['user_<%= @contact.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @contact.id %> }, {
+      sendTypingNotification: function() {
+        this.perform('typing', { type: 'typing', sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      },
+      sendSeenNotification: function() {
+        this.perform('messages_seen', { type: 'messages seen', user_id: <%= @user.id %>, contact_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      },
+      makeMessagesSeenInDatabase: function() {
+        this.perform('messages_seen', { type: 'messages seen PATCH', user_id: <%= @user.id %>, contact_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
+      }
+    })
+
+    function broadcastTypingEvent() {
+      App['user_<%= @contact.id %>'].sendTypingNotification();
+    }
+
+    const input = document.getElementById('redaction-bar')
+    input.addEventListener('beforeinput', broadcastTypingEvent)
+    //////////
+
+    // Subscribe to current user's own channel to receive data sent over by over users and deal with it
+    // Here is where I transform the notification into a graphic 'Typing...' result
+
+    // Shows the 'typing...' notification
+    function displayTypingEvent(data) {
+      const senderStatus = document.querySelector('.sender-status');
+      senderStatus.innerHTML = 'typing...';
+      window.clearTimeout(window.timeoutHandle);
+      window.timeoutHandle = window.setTimeout(function(){
+        senderStatus.innerHTML = 'Back to normal';
+      },1500);
+    }
+
+    function updateUnseenChatCount(data) {
+      const unseenChatCount = document.querySelector('.btn-return-to-dashboard span');
+      unseenChatCount.innerHTML = data.unseen_chat_count_partial;
+    }
+
+    function makeMessagesSeen(data) {
+      const unseenChecks = document.querySelectorAll(".fa-check-double:not(.blue)")
+      unseenChecks.forEach((check) => {
+        check.classList.add('blue');
+      })
+    }
+
+    App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
-        if (data.current_user_id !== <%= @user.id %>) {
-          const messagesContainer = document.querySelector('.container-messages');
-          removePreviousBubbleArrow();
-          messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
-          scrollLastMessageIntoView();
+        if ((data.type === 'typing') && (data.chat_id === <%= @chat.id %>)) {
+          displayTypingEvent(data);
+        } else if (data.type === 'new message') {
+          if (data.chat_id === <%= @chat.id %>) {
+            appendReceivedMessage(data);
+          } else {
+            updateUnseenChatCount(data);
+          }
+        } else if (data.type === 'messages seen') {
+          if (data.chat_id === <%= @chat.id %>) {
+            makeMessagesSeen(data);
+          }
         }
       }
     })
+
+    function broadcastSeenEvent() {
+      App['user_<%= @contact.id %>'].sendSeenNotification();
+    }
+
+    function makeMessagesSeenInDatabase () {
+      App['user_<%= @contact.id %>'].makeMessagesSeenInDatabase();
+    }
+
+    // Set a few event listeners that 'track' when recipient is active on chat to turn messages to 'seen'
+    // Making sure not to hit the actual database constantly in the background with a timer. Only allowed to hit the database every 2 seconds while seen receipts (double checks) can become blue every time the event is triggered
+    let scheduled = null;
+    window.addEventListener("touchstart", event => {
+      broadcastSeenEvent();
+      if (!scheduled) {
+        setTimeout(() => {
+          makeMessagesSeenInDatabase();
+          scheduled = null;
+        }, 1500);
+      }
+      scheduled = event;
+    });
+
+    window.addEventListener('mouseover', event => {
+      if (!scheduled) {
+        setTimeout(() => {
+          broadcastSeenEvent();
+          makeMessagesSeenInDatabase();
+          scheduled = null;
+        }, 1500);
+      }
+      scheduled = event;
+    });
+
+    input.addEventListener('beforeinput', event => {
+      broadcastSeenEvent();
+      if (!scheduled) {
+        setTimeout(() => {
+          makeMessagesSeenInDatabase();
+          broadcastSeenEvent();
+          scheduled = null;
+        }, 1500);
+      }
+      scheduled = event;
+    });
+
+
+    // window.addEventListener('mouseover', broadcastSeenEvent);
+    //     let timeout
+    // window.addEventListener('mouseover', () => {
+    //   clearTimeout(timeout);
+    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
+    // });
+    // window.addEventListener('touchstart', () => {
+    //   clearTimeout(timeout);
+    //   timeout = setTimeout(() => broadcastSeenEvent, 3000);
+    // });
+
   </script>
 <% end %>
 
 
 
 
+<!-- what is should do -->
+<!-- upon mouseover or touch by message recipient -->
+<!-- should make all their unread messages read -->
+<!-- and make the tick blue for the sender -->
 
+<!-- when recipient opens the page, sender should see ticks go blue as well -->
 
 
 

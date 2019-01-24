@@ -27,16 +27,48 @@
 <% content_for :after_js do %>
   <%= javascript_pack_tag 'contact-form' %>
   <script>
+    // Displays updated chat-chard when new message is sent
     function updateChatCard(data) {
+      makeSeenCheckBlue(data);
       const chatCard = document.getElementById(`chat-card-${data.chat_id}`);
       const contactForm = document.getElementById('add-contact');
-      chatCard.remove();
+      if (chatCard) {
+        chatCard.remove();
+      }
       contactForm.insertAdjacentHTML('afterend', `${data.chat_partial}`);
+    }
+
+    // Display 'typing...' on chat card when someone is writing
+    function displayTypingEvent(data) {
+      const chatCardNotificationArea = document.getElementById(`message-content-${data.chat_id}`);
+      window.clearTimeout(window['timeoutHandle_' + data.chat_id]);
+      if (chatCardNotificationArea.innerHTML !== "<i>typing...</i>") {
+        window['messageContent_' + data.chat_id] = chatCardNotificationArea.innerHTML;
+      }
+      chatCardNotificationArea.innerHTML = "<i>typing...</i>";
+      window['timeoutHandle_' + data.chat_id] = window.setTimeout(function(){
+        chatCardNotificationArea.innerHTML = window['messageContent_' + data.chat_id]
+      },1500);
+    }
+
+    // In a chat card where current user sent last message, read receipt will turn blue
+    function makeSeenCheckBlue(data) {
+      chatId = data.chat_id;
+      const seenReceipt = document.querySelector(`#chat-card-${chatId} .fa-check-double`)
+      if (seenReceipt) {
+        seenReceipt.classList.add('blue');
+      };
     }
 
     App['user_<%= @user.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @user.id %> }, {
       received: (data) => {
-        updateChatCard(data);
+        if (data.type === "new message (chat-card)") {
+          updateChatCard(data);
+        } else if (data.type === "messages seen") {
+          makeSeenCheckBlue(data);
+        } else {
+          displayTypingEvent(data);
+        }
       }
     })
 

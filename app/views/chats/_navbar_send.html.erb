@@ -1,9 +1,10 @@
 <div class="navbar navbar-chat">
-  <div>
-    <%= link_to root_path do %>
-      <i class="fas fa-angle-left navbar-return icon"></i>
-    <% end %>
+  <%= link_to root_path do %>
+  <div class="btn-return-to-dashboard">
+    <i class="fas fa-angle-left navbar-return icon"></i>
+    <%= render 'unseen_chat_count', user: @user %>
   </div>
+  <% end %>
   <div class="navbar-contact-info">
     <%= image_tag @contact.photo.url, class: "avatar-small" %>
 

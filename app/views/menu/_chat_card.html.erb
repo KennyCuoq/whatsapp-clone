@@ -11,7 +11,7 @@
       </div>
       <div class="chat-card-message">
         <div class="message-content">
-          <p>
+          <p id="message-content-<%= chat.id %>">
             <i class="fas fa-check-double tick <%= 'blue' if message.seen %>"></i>
             <%= message.content %>
           </p>
@@ -24,7 +24,7 @@
       </div>
       <div class="chat-card-message">
         <div class="message-content">
-          <p><%= message.content %></p>
+          <p id="message-content-<%= chat.id %>"><%= message.content %></p>
         </div>
         <% if message.unseen? %>
           <div class="count-unseen">
