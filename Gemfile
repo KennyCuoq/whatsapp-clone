@@ -19,6 +19,8 @@ gem 'webpacker'
 gem 'cloudinary', '~> 1.9.1'
 gem 'carrierwave', '~> 1.2'
 gem 'pundit'
+gem 'sprockets', '>= 3.0.0'
+gem 'sprockets-es6'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
