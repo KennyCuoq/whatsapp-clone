@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :photo])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :photo, :email])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:username, :photo])
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :photo])
   end
