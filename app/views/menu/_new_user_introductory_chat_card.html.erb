@@ -1,0 +1,21 @@
+<div class="chat-card">
+  <%= image_tag "logo.png", class: "chat-card-avatar" %>
+  <div class="chat-card-info">
+    <div class="chat-card-sender">
+      <p class="sender-name"><strong>WhatsUpp Bot</strong></p>
+      <p class="time blue"><%= current_user.created_at.strftime("%H:%M") %></p>
+    </div>
+    <div class="chat-card-message">
+      <div class="message-content">
+        <p>Welcome to WhatsUpp! Click <i class="far fa-edit blue"></i> to start a conversation ☺️</p>
+      </div>
+      <div class="count-unseen">
+        <p>1</p>
+      </div>
+    </div>
+  </div>
+  <div class="chat-card-arrow">
+      <i class="fas fa-angle-right"></i>
+  </div>
+</div>
+

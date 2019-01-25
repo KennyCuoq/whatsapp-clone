@@ -15,6 +15,9 @@
         <% end %>
       <% end %>
     </div>
+    <% if @chats.empty? %>
+      <%= render 'new_user_introductory_chat_card' %>
+    <% end %>
     <% @chats.each do |chat| %>
       <%= link_to chat_path(chat) do  %>
         <%= render 'chat_card', chat: chat, user: @user %>
