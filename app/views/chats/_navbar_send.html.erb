@@ -10,7 +10,11 @@
 
     <div class="sender-details">
       <p class="sender-name"><strong><%= @contact.username %></strong></p>
-      <p class="sender-status">last connected today at 15:23</p>
+      <p class="sender-status">
+        <% if !@contact.status.nil? %>
+          <%= @contact.status %>
+        <% end %>
+      </p>
     </div>
   </div>
   <div class="call-options">

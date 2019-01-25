@@ -8,6 +8,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   mount_uploader :photo, PhotoUploader
 
+  def after_database_authentication
+    self.status = 'online'
+    self.save!
+  end
+
   def chats
     # Picks up chats that has messages where user is either a recipient or a sender
     chats = all_chats_including_self
