@@ -8,9 +8,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   mount_uploader :photo, PhotoUploader
 
+  Warden::Manager.before_logout do |user, auth, opts|
+   user.status = Time.now
+   user.save!
+   user.broadcast_status
+  end
+
   def after_database_authentication
     self.status = 'online'
     self.save!
+    broadcast_status
   end
 
   def chats
@@ -30,6 +37,17 @@ class User < ApplicationRecord
     # This could be rewritten in a more efficient query
     all_chats_including_self.select { |chat| chat.count_unseen_by(self) > 0 }.count
 
+  end
+
+  def broadcast_status
+    # Broadcast status change to people wired to that user's channel
+    ActionCable.server.broadcast("user_#{self.id}", {
+      user_status_partial: ApplicationController.renderer.render(
+        partial: 'chats/contact_status',
+        locals: { contact: self }
+      ),
+      type: 'status change'
+    })
   end
 
   private

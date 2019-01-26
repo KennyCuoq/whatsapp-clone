@@ -38,7 +38,7 @@
       const messagesContainer = document.querySelector('.container-messages');
       removePreviousBubbleArrow();
       const senderStatus = document.querySelector('.sender-status');
-      senderStatus.innerHTML = 'Back to normal';
+      senderStatus.innerHTML = data.user_status_partial;
       messagesContainer.insertAdjacentHTML('beforeend', data.message_partial);
       scrollLastMessageIntoView();
     }
@@ -46,8 +46,18 @@
     scrollLastMessageIntoView();
 
     //////////
+    // Update contact's status as they log in/out
+    function updateContactMessageStatus(data) {
+      const status = document.querySelector('.sender-status');
+      status.innerHTML = data.user_status_partial;
+    }
     // Subscribe to the contact's personal channel to be able to send data through it, to notify of type event for ex
     App['user_<%= @contact.id %>'] = App.cable.subscriptions.create({ channel: 'UsersChannel', user_id: <%= @contact.id %> }, {
+      received: (data) => {
+        if (data.type == 'status change') {
+          updateContactMessageStatus(data);
+        }
+      },
       sendTypingNotification: function() {
         this.perform('typing', { type: 'typing', sender_id: <%= @user.id %>, recipient_id: <%= @contact.id %>, chat_id: <%= params[:id].to_i %>});
       },
@@ -76,7 +86,7 @@
       senderStatus.innerHTML = 'typing...';
       window.clearTimeout(window.timeoutHandle);
       window.timeoutHandle = window.setTimeout(function(){
-        senderStatus.innerHTML = 'Back to normal';
+        senderStatus.innerHTML = data.user_status_partial;
       },1500);
     }
 
