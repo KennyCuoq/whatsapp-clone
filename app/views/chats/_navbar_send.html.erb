@@ -11,9 +11,7 @@
     <div class="sender-details">
       <p class="sender-name"><strong><%= @contact.username %></strong></p>
       <p class="sender-status">
-        <% if !@contact.status.nil? %>
-          <%= @contact.status %>
-        <% end %>
+        <%= render 'contact_status', contact: @contact %>
       </p>
     </div>
   </div>
