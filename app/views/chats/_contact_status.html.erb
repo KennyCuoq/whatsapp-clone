@@ -1,0 +1,24 @@
+<% if !contact.status.nil? %>
+  <% status = contact.status %>
+    <!-- returns 'online' if user is online -->
+  <% if status == 'online' %>
+    <%= status %>
+  <% else %>
+    <!-- deals with scenario where user is offline -->
+    <% status = Time.parse(status) %>
+    <% date = status.to_date %>
+    <% if date == Date.today %>
+      <!-- returns eg 'last seen today at 05:51' if last seen today-->
+      last seen today at <%= status.strftime('%H:%M') %>
+    <% elsif data = Date.today - 1 %>
+      <!-- returns eg 'last seen yesterday at 21:53' -->
+      last seen yesterday at <%= status.strftime('%H:%M') %>
+    <% elsif date > (Date.today - 7) %>
+      <!-- returns eg 'last seen Thursday at 06:52' -->
+      last seen <%= status.strftime("%A") %> at <%= status.strftime('%H:%M') %>
+    <% else %>
+      <!-- returns eg 'last seen Sun 9 Jan' -->
+      last seen <%= status.strftime('%a %e %b') %>
+    <% end %>
+  <% end %>
+<% end %>

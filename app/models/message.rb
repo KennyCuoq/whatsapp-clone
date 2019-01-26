@@ -21,6 +21,10 @@ class Message < ApplicationRecord
         partial: 'messages/message',
         locals: { message: self, was_sent_by_user: false }
       ),
+      user_status_partial: ApplicationController.renderer.render(
+        partial: 'chats/contact_status',
+        locals: { contact: self.sender }
+      ),
       chat_id: chat.id,
       type: 'new message'
     })

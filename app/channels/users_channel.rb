@@ -13,7 +13,11 @@ class UsersChannel < ApplicationCable::Channel
       type: data['type'],
       sender_id: data['sender_id'],
       recipient_id: recipient_id,
-      chat_id: data['chat_id']
+      chat_id: data['chat_id'],
+      user_status_partial: ApplicationController.renderer.render(
+        partial: 'chats/contact_status',
+        locals: { contact: User.find(data['sender_id']) }
+      )
     }
   end
 
